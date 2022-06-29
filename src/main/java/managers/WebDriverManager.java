@@ -19,7 +19,7 @@ public class WebDriverManager {
 		driverType = FileReaderManager.getInstance().getConfigReader().getBrowser();
 	}
 	
-	public WebDriver getDriver() {
+	public  WebDriver getDriver() {
 		if(driver == null) driver = createDriver();//if driver not created it will create
 		return driver;
 	}
@@ -31,14 +31,16 @@ public class WebDriverManager {
 	}
 	
 	private WebDriver createDriver() {
+		String dir=	System.getProperty("user.dir");
 		switch (driverType) {	
         case FIREFOX : 
-        	System.setProperty(FIREFOX_DRIVER_PROPERTY, FileReaderManager.getInstance().getConfigReader().getDriverPath());
+        	
+        	System.setProperty(FIREFOX_DRIVER_PROPERTY, dir+FileReaderManager.getInstance().getConfigReader().getDriverPath());
         	driver = new FirefoxDriver();
         break;
         case CHROME : 
         	System.out.println( FileReaderManager.getInstance().getConfigReader().getDriverPath());
-        	System.setProperty(CHROME_DRIVER_PROPERTY, FileReaderManager.getInstance().getConfigReader().getDriverPath());
+        	System.setProperty(CHROME_DRIVER_PROPERTY, dir+FileReaderManager.getInstance().getConfigReader().getDriverPath());
         	driver = new ChromeDriver();
     		break;
 	}
