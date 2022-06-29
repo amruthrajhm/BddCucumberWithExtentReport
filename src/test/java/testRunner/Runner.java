@@ -23,6 +23,7 @@ monochrome = true,
 plugin = {"pretty","html:testOutput/TestsLog_output.html","com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
 
 )
+
 public class Runner {
 	//extent report will be generated, file path ccaptuyre from configfile
 	/*

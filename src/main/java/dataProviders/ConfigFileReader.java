@@ -44,6 +44,12 @@ public class ConfigFileReader {
 		else throw new RuntimeException("implicitlyWait not specified in the Configuration.properties file.");		
 	}
 	
+	public  int getWaitSeconds(String waitType)
+	{
+		String iWait = properties.getProperty(waitType);
+		return Integer.valueOf(iWait);
+	}
+	
 	public String getApplicationUrl() {
 		System.out.println(properties.getProperty("url"));
 		String url = properties.getProperty("url");
@@ -68,28 +74,17 @@ public class ConfigFileReader {
 	
 
 	public String getReportConfigPath() {
-	String dir=	System.getProperty("user.dir");
+		//"C:\\Users\\admin\\eclipse-workspace\\bddCucumber\\"
+	String fileName=System.getProperty("user.dir")+"\\Configs\\"+"Configuration.properties";
 	Properties Prop =new Properties();
-	String fileName=dir+"\\Configs\\"+"Configuration.properties";//"C:\\Users\\admin\\eclipse-workspace\\bddCucumber\\"
-	FileInputStream iFile = null;
-	
 	try {
-		iFile = new FileInputStream(new File(fileName));
-		Prop.load(iFile); //load the properties of file
+		Prop.load(new FileInputStream(new File(fileName))); //load the properties of file
 	} catch (Exception e) {
 		e.printStackTrace();
 	}//get the file
-	finally {
-		try {
-			iFile.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 		String reportConfigPath = Prop.getProperty("reportConfigPath");
-		System.out.println(reportConfigPath);
-		
-		
+		System.out.println(reportConfigPath);	
 		if(reportConfigPath!= null) return reportConfigPath;
 		else throw new RuntimeException("Report Config Path not specified in the Configuration.properties file for the Key:reportConfigPath");		
 	
@@ -98,13 +93,12 @@ public class ConfigFileReader {
 	
 	public Properties readPropertyFileData() 
 	{
+		String fileName=System.getProperty("user.dir")+"\\Configs\\"+"Configuration.properties";
 		Properties Prop =new Properties();
-		String dir=System.getProperty("user.dir");
-		String fileName=dir+"\\Configs\\"+"Configuration.properties";//"C:\\Users\\admin\\eclipse-workspace\\bddCucumber\\"
-		FileInputStream iFile = null;
+		FileReader iReader=null;
 		try {
-			iFile = new FileInputStream(new File(fileName));//get the file
-			Prop.load(iFile); //load the properties of file
+			 iReader=new FileReader(new File(fileName));
+			Prop.load(new BufferedReader(iReader)); //load the properties of file
 			//url=Prop.getProperty("url"); //get the url assign it to public variable
 				
 		} 
@@ -116,7 +110,7 @@ public class ConfigFileReader {
 	     }
 		finally {
 				try {
-					iFile.close();
+					iReader.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}	

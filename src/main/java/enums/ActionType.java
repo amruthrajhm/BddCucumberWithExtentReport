@@ -4,6 +4,10 @@ public enum ActionType {
 	CLICK,
 	SELECT,
 	SETTEXT,
-	GETTEXT
+	GETTEXT,
+	CLICKALERT,
+	HOVERMOUSE,
+	MOUSECLICK
+	//IWAIT
 
 }

@@ -9,22 +9,77 @@ import com.aventstack.extentreports.model.Report;
 
 import io.cucumber.java.en.*;
 import io.cucumber.java.en.Then;
-
+import libraries.BrowserFunctions;
 import managers.BrowserManager;
+import managers.FileReaderManager;
 import managers.ObjectRepositoryManager;
 import managers.StepsWritter;
 import managers.WebDriverManager;
 import pageObjects.HomePage;
 
-public class LoginPage extends WebDriverManager{
+public class FlipKart_Home extends WebDriverManager{
 	//WebDriver browserObj;
 	//public HomePage homePage;
+	BrowserManager browserManager=new BrowserManager();
+	
+	
+
+@Given("User launch browser with given URL")
+public void user_launch_browser_with_given_url() {
+  StepsWritter.writeSteps("launch browser with url:"+FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
+}
+
+@Given("Enter username as {string} and Password 	as {string} and click login")
+public void enter_username_as_and_password_as_and_click_login(String userName, String password) {
+	ObjectRepositoryManager.setObjectRepository("FlipKart.properties");
+	BrowserFunctions.ExplicitImplicitWaits("", "browserwait", 5);
+	browserManager.BrowserNavigation("HomePage.LoginLnk.Xpath", "hovermouse", "");
+	browserManager.BrowserNavigation("HomePage.LoginLnk.Xpath", "mouseclick", "");
+	BrowserFunctions.ExplicitImplicitWaits("", "browserwait", 5);
+	browserManager.BrowserNavigation("HomePage.userNameTxt.Xpath", "settext", userName);
+	browserManager.BrowserNavigation("HomePage.PasswordTxt.Xpath", "settext", password);
+	browserManager.BrowserNavigation("HomePage.LoginBtn.Xpath", "click", "");
+	BrowserFunctions.ExplicitImplicitWaits("HomePage.invalindEmailError.Xpath", "visibilityofelement", 10);
+	BrowserFunctions.verifyElementTextContains("HomePage.invalindEmailError.Xpath", "this is wrong text");
+	
+}
+	
+	
+
+@Given("Search {string}  and click on it")
+public void search_and_click_on_it(String SearchText) {
+	ObjectRepositoryManager.setObjectRepository("FlipKart.properties");
+	browserManager.BrowserNavigation("HomePage.SearchInputTxt.Xpath", "mouseclick", "");
+	browserManager.BrowserNavigation("HomePage.SearchInputTxt.Xpath", "settext", SearchText);
+	BrowserFunctions.ExplicitImplicitWaits("", "browserwait", 5);
+	browserManager.BrowserNavigation("HomePage.SamsungMobilesElemt.Xpath", "hovermouse", "");
+	browserManager.BrowserNavigation("HomePage.SamsungMobilesElemt.Xpath", "click", "");
+    
+}
+@Then("click on {string}")
+public void click_on(String string) {
+    // Write code here that turns the phrase above into concrete actions
+   // throw new io.cucumber.java.PendingException();
+}
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Given("User launch Chrome browser with given URL")
 	public void user_launch_chrome_browser_with_given_url() throws InterruptedException
 	{
 		
 		ObjectRepositoryManager.setObjectRepository("common.properties");
-		BrowserManager browserManager=new BrowserManager();
+		
 		//StepsWritter.writeSteps("set mugilu@gmail.com to obj login.userNameTxt.Xpath");
 		browserManager.BrowserNavigation("login.userNameTxt.Xpath", "settext", "mugilu@gmail.com");
 		Thread.sleep(5000);

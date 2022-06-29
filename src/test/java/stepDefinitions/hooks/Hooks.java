@@ -43,9 +43,12 @@ public class Hooks extends WebDriverManager{
 	//take screenshot if scenario fails
 	@After(order = 1)
 	public void afterScenario(Scenario scenario) {
-		if (scenario.isFailed()) {
-			String screenshotName = scenario.getName().replaceAll(" ", "_");
+		System.out.println(StepsWritter.getScenario().isFailed());
+		if (StepsWritter.getScenario().isFailed()) {
+			String screenshotName = StepsWritter.getScenario().getName().replaceAll(" ", "_");
 			try {
+				byte[] scrShot=((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
+				
 				//This takes a screenshot from the driver at save it to the specified location
 				File sourcePath = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
 				
@@ -55,8 +58,9 @@ public class Hooks extends WebDriverManager{
 				
 				//Copy taken screenshot from source location to destination location
 				
-				Files.copy(sourcePath, destinationPath);   
-
+				Files.copy(sourcePath, destinationPath);
+				
+				StepsWritter.getScenario().attach(scrShot, "image/png", screenshotName);
 				//This attach the specified screenshot to the test
 				//Reporter.addScreenCaptureFromPath(destinationPath.toString());
 			} catch (IOException e) {
