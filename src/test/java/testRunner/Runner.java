@@ -14,9 +14,10 @@ import managers.FileReaderManager;
 @RunWith(Cucumber.class)
 @CucumberOptions(features= {"Features"},
 glue= {"stepDefinitions"},
-
+tags = "@yatra",
 dryRun = false,
 monochrome = true,
+
 //plugin = {"pretty","html:testOutput/output.html"}
 
 //"html:testOutput/output.html",   com.vimalselvam.cucumber.listener.ExtentCucumberFormatter, com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter
