@@ -20,7 +20,6 @@ public class TestDataManagerNew {
 	public static void SetTestDataFile(String fileName)
 	{
 		TestDataManagerNew.dataFileName=fileName;
-		
 	}
 	//returns datafile name
 	public String getFileName()
@@ -153,6 +152,7 @@ public class TestDataManagerNew {
 	           default :
 	         }
 	       }
+		
 		//close the work book ,input stream
 		workBook.close();
 //fis.close();
